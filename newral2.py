@@ -1,11 +1,11 @@
 import numpy as np
-input=[2,2]
-target=[4,1]
+input=[2,2,7,4,5,7,5,8]
+target=[4,1,3]
 hiden=[]
 weight=[]
 biase=[]
 ######################################
-def network(input,output,nofhiden=2,nodeinhiden=2):
+def network(input,output,nofhiden=2,nodeinhiden=4):
     global biase
     wt=[]
     biase=np.random.rand(nofhiden+1)
@@ -56,7 +56,6 @@ def err1(input,output,target,w):
     wt=w
     out=output
     z=[]
-    temp=[]
     alpha=[]
     salpha=[]
     for i in range(len(target)):
@@ -69,6 +68,8 @@ def err1(input,output,target,w):
     o=out.pop()
     o=out.pop()
     for i in range(len(w)-1):
+        temp=[]
+        print("alpha in loop"+str(alpha)+"shape"+str(np.array(alpha).shape))
         s=np.matrix(alpha)*np.matrix(wt.pop())
         print("s"+str(s))
         for i in range(len(s)):
@@ -76,11 +77,12 @@ def err1(input,output,target,w):
             temp.append(b)
             salpha.append(np.array(b))
             print("@"+str(b))
-    #alpha.clear()
-   # print("weight1 isz"+str(z))
-    alpha.append(np.array(temp))
-    
-    print("new alpha"+str(alpha))
+        alpha.clear()
+        print("weight1 isz"+str(temp))
+        temp=np.array(temp).reshape(4,)
+        alpha.append(temp)
+        print("new alpha"+str(alpha))
+        
     return salpha
 
     
@@ -117,6 +119,6 @@ def bp(input):
 
 bp(input)
 e=err1(input,outh,target,w)
-z=errwt(e,outh)
-print("sende"+str(z))
+#z=errwt(e,outh)
+#print("sende"+str(z))
 print(len(e))
